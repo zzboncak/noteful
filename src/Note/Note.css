@@ -1,0 +1,17 @@
+.note {
+    width: 500px;
+    margin-top: 25px;
+    text-align: left;
+    border: 1px solid black;
+    position: relative;
+}
+
+button {
+    position: absolute;
+    right: 10px;
+    bottom: 10px;
+}
+
+h2, p {
+    padding-left: 20px;
+}
