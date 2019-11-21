@@ -1,20 +1,20 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import Note from '../Note/Note';
 import './NoteDetail.css';
 
 class NoteDetail extends React.Component {
     render() {
-        console.log(this.props);
-        console.log(this.props.noteId);
+        console.log(`NoteDetail props`, this.props);
         const note = this.props.store.notes.find(note => note.id === this.props.noteId);
-        console.log(`specific note note info`, note);
         const folder = this.props.store.folders.find(folder => folder.id === note.folderId);
-        console.log(`specific note folder info`, folder);
         return (
             <div className="note-detail-container">
                 <div className="left-sidebar">
-                    <button type="button" className="go-back-button">Go Back</button>
-                    <h3>{folder.name}</h3>
+                    <Link to="/">
+                        <button type="button" className="go-back-button" onClick={this.props.goBack}>Go Back</button>
+                    </Link>
+                    <h2>{folder.name}</h2>
                 </div>
                 <div className="note-details">
                     <Note id={this.props.noteId} name={note.name} modified={note.modified} />

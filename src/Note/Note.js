@@ -13,7 +13,7 @@ class Note extends React.Component {
         
         return (
             <div className="note">
-                <Link to={`/note/${this.props.id}`}><h2 className="note-title">Note {this.props.name}</h2></Link>
+                <Link to={`/note/${this.props.id}`} style={{ textDecoration: 'none' }}><h2 className="note-title">{this.props.name}</h2></Link>
                 <p className="modified-text">Date modified: {month} {day}, {year}</p>
                 <button className="delete-button">Delete Note</button>
             </div>

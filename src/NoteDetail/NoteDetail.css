@@ -12,10 +12,16 @@
 }
 
 .go-back-button {
+    height: 25px;
+    width: 100px;
     border-radius: 10px;
 }
 
 .go-back-button:hover {
     cursor: pointer;
     background-color: orange;
+}
+
+.note-content {
+    max-width: 400px;
 }

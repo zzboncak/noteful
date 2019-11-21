@@ -6,3 +6,11 @@ main {
 .sidebar {
   border: 1px solid black;
 }
+
+.main-header {
+  margin-left: 200px;
+}
+
+.main-header:hover {
+  cursor: pointer;
+}

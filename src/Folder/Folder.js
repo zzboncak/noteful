@@ -5,9 +5,9 @@ import './Folder.css';
 class Folder extends React.Component {
     render() {
         return (
-            <div className='folder'>
-                <Link to={`/folder/${this.props.folderId}`}>
-                    <h3>Folder {this.props.name}</h3>
+            <div className={`folder ${this.props.className}`}>
+                <Link style={{ textDecoration: 'none' }} to={`/folder/${this.props.folderId}`}>
+                    <h3 className="folder-name">Folder {this.props.name}</h3>
                 </Link>
             </div>
         )

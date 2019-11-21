@@ -17,6 +17,7 @@ class NotesList extends React.Component {
         return (
             <div className="notes-container">
                 {notes}
+                <button className="add-note-button" type="button">Add a note</button>
             </div>
         );
     }
