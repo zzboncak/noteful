@@ -6,10 +6,15 @@
     position: relative;
 }
 
-button {
+.delete-button {
     position: absolute;
     right: 10px;
     bottom: 10px;
+}
+
+.delete-button:hover {
+    cursor: pointer;
+    background-color: orange;
 }
 
 h2, p {

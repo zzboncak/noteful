@@ -3,6 +3,7 @@ import { Route } from 'react-router-dom';
 import './App.css';
 import Home from './Home/Home';
 import STORE from './dummy-store';
+import NoteDetail from './NoteDetail/NoteDetail';
 
 class App extends React.Component {
   render() {
@@ -19,16 +20,10 @@ class App extends React.Component {
             path='/folder/:folderId'
             render={(props) => <Home store={STORE} props={props} folderId={props.match.params.folderId} />}
           />
-          {/* <Route
-            exact path='/'
-            render={() => 
-              <Sidebar folders={STORE.folders}/>}
-          />
           <Route
-            exact path='/'
-            render={() =>
-            <NotesList notes={STORE.notes}/>}
-          /> */}
+            path='/note/:noteId'
+            render={(props) => <NoteDetail store={STORE} noteId={props.match.params.noteId} />}
+          />
         </main>
       </div>
     );

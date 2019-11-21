@@ -10,7 +10,7 @@ class NotesList extends React.Component {
         
         const notes = initialNotes.map((note, i) => {
             return (
-                <Note name={note.name} modified={note.modified} key={i} />
+                <Note name={note.name} modified={note.modified} id={note.id} key={i} />
             );
         });
         
