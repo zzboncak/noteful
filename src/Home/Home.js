@@ -3,8 +3,9 @@ import Sidebar from '../Sidebar/Sidebar';
 import NotesList from '../NotesList/NotesList';
 
 class Home extends React.Component {
+    
     render() {
-        console.log(`Home props`, this.props);
+        //console.log(`Home context`, this.context);
         return (
             <main className="main-container">
                 <Sidebar folders={this.props.store.folders} folderId={this.props.folderId} />
