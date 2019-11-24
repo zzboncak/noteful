@@ -7,15 +7,8 @@ import NoteContext from '../NoteContext';
 class NoteDetail extends React.Component {
     static contextType = NoteContext;
 
-    componentDidMount() {
-        this.context.updateNoteId(this.props.match.params.noteId);
-    }
-
-
     render() {
-        console.log(`NoteDetail context`, this.context);
-        console.log(this.props.match.params.noteId);
-        const note = this.context.notes.find(note => note.id === this.context.currentNoteId);
+        const note = this.context.notes.find(note => note.id === this.props.match.params.noteId);
         const folder = this.context.folders.find(folder => folder.id === note.folderId);
         return (
             <div className="note-detail-container">

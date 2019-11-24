@@ -11,7 +11,6 @@ class Home extends React.Component {
     }
 
     render() {
-        console.log(`Home context`, this.context)
         return (
             <main className="main-container">
                 <Sidebar />

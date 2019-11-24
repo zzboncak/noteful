@@ -15,14 +15,12 @@ class App extends React.Component {
   }
 
   updateFolderId = (id) => {
-    console.log(`updateFolderId Fired!`);
     this.setState({
       currentFolderId: id
     });
   }
 
   updateNoteId = (id) => {
-    console.log(`updateNoteId Fired!`);
     this.setState({
       currentNoteId: id
     });
