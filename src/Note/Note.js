@@ -20,7 +20,7 @@ class Note extends React.Component {
                     <h2 className="note-title" onClick={() => this.context.updateNoteId(this.props.id)}>{this.props.name}</h2>
                 </Link>
                 <p className="modified-text">Date modified: {month} {day}, {year}</p>
-                <button className="delete-button">Delete Note</button>
+                <button className="delete-button" onClick={() => this.context.handleDelete(this.props.id)}>Delete Note</button>
             </div>
         )
     }

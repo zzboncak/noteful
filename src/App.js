@@ -2,14 +2,14 @@ import React from 'react';
 import { Route, Link } from 'react-router-dom';
 import './App.css';
 import Home from './Home/Home';
-import STORE from './dummy-store';
 import NoteDetail from './NoteDetail/NoteDetail';
 import NoteContext from './NoteContext';
 
 class App extends React.Component {
 
   state = {
-    store: STORE,
+    folders: [],
+    notes: [],
     currentFolderId: null,
     currentNoteId: null
   }
@@ -26,20 +26,45 @@ class App extends React.Component {
     });
   }
 
-  handleDelete = () => {
+  handleDelete = (noteId) => {
     console.log(`You clicked a delete button!`);
+    let currentNotes = this.state.notes;
+    let newNotes = currentNotes.filter(note => note.id !== noteId);
+    this.setState({ notes: newNotes });
+  }
+
+  componentDidMount() {
+    fetch('http://localhost:9090/folders').then(res => {
+      if (!res.ok) {
+        throw new Error(`something went wrong`)
+      }
+      return res.json();
+    })
+    .then(data => this.setState({ folders: data }))
+    .catch(err => console.log(err));
+
+    fetch('http://localhost:9090/notes').then(res => {
+      if (!res.ok) {
+        throw new Error(`something went wrong`)
+      }
+      return res.json();
+    })
+    .then(data => this.setState({ notes: data }))
+    .catch(err => console.log(err));
   }
   
   render() {
     const noteContext = {
-      folders: this.state.store.folders,
-      notes: this.state.store.notes,
+      folders: this.state.folders,
+      notes: this.state.notes,
       updateFolderId: this.updateFolderId,
       updateNoteId: this.updateNoteId,
       currentFolderId: this.state.currentFolderId,
       currentNoteId: this.state.currentNoteId,
       handleDelete: this.handleDelete
     };
+
+    console.log(`App state`, this.state);
 
     return (
       <NoteContext.Provider value={noteContext}>
