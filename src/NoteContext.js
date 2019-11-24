@@ -5,7 +5,9 @@ const NoteContext = React.createContext({
     folders: [],
     handleDelete: () => {},
     updateFolderId: () => {},
-    currentFolderId: null
+    updateNoteId: () => {},
+    currentFolderId: null,
+    currentNoteId: null,
 });
 
 export default NoteContext;

@@ -11,11 +11,20 @@ class App extends React.Component {
   state = {
     store: STORE,
     currentFolderId: null,
+    currentNoteId: null
   }
 
   updateFolderId = (id) => {
+    console.log(`updateFolderId Fired!`);
     this.setState({
       currentFolderId: id
+    });
+  }
+
+  updateNoteId = (id) => {
+    console.log(`updateNoteId Fired!`);
+    this.setState({
+      currentNoteId: id
     });
   }
 
@@ -24,32 +33,34 @@ class App extends React.Component {
   }
   
   render() {
-    console.log(`App props`, this.props);
     const noteContext = {
       folders: this.state.store.folders,
       notes: this.state.store.notes,
-      currentFolderId: this.state.currentFolderId,
       updateFolderId: this.updateFolderId,
+      updateNoteId: this.updateNoteId,
+      currentFolderId: this.state.currentFolderId,
+      currentNoteId: this.state.currentNoteId,
       handleDelete: this.handleDelete
     };
 
     return (
       <NoteContext.Provider value={noteContext}>
         <div className="App">
-          <Link to="/" style={{ textDecoration: 'none' }}><h1 className="main-header">Noteful</h1></Link>
+          <Link to="/" style={{ textDecoration: 'none' }}>
+            <h1 className="main-header" onClick={() => this.updateFolderId(null)}>Noteful</h1>
+          </Link>
           <main className="main-container">
             <Route
               exact path='/'
-              render={() =>
-                <Home store={this.state.store} />}
+              component={Home}
             />
             <Route
               path='/folder/:folderId'
-              render={(props) => <Home store={this.state.store} props={props} folderId={props.match.params.folderId} />}
+              component={Home}
             />
             <Route
               path='/note/:noteId'
-              render={(props) => <NoteDetail store={this.state.store} noteId={props.match.params.noteId} goBack={() => props.history.goBack()} />}
+              component={NoteDetail}
             />
           </main>
         </div>
