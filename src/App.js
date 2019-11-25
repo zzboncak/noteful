@@ -1,5 +1,5 @@
 import React from 'react';
-import { Route, Link } from 'react-router-dom';
+import { Route, Link, Switch } from 'react-router-dom';
 import './App.css';
 import Home from './Home/Home';
 import NoteDetail from './NoteDetail/NoteDetail';
@@ -33,6 +33,33 @@ class App extends React.Component {
     this.setState({ notes: newNotes });
   }
 
+  requestDelete = (noteId, callback, isNoteDetail) => {
+    fetch(`http://localhost:9090/notes/${noteId}`, {
+      method: 'DELETE',
+      headers: {
+        'content-type': 'application/json'
+      },
+    })
+    .then(res => {
+      if(!res.ok) {
+        return res.json().then(error => {
+          throw error
+        })
+      }
+      return res.json();
+    })
+    .then(data => {
+      // if (isNoteDetail) {
+      //   callback(noteId);
+      //   return <Redirect to='/' />;
+      // }
+      callback(noteId);
+    })
+    .catch(err => {
+      console.log(err);
+    });
+  }
+
   componentDidMount() {
     fetch('http://localhost:9090/folders').then(res => {
       if (!res.ok) {
@@ -61,7 +88,8 @@ class App extends React.Component {
       updateNoteId: this.updateNoteId,
       currentFolderId: this.state.currentFolderId,
       currentNoteId: this.state.currentNoteId,
-      handleDelete: this.handleDelete
+      handleDelete: this.handleDelete,
+      requestDelete: this.requestDelete
     };
 
     console.log(`App state`, this.state);
