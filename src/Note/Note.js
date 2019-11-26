@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 import './Note.css';
 import NoteContext from '../NoteContext';
 
@@ -22,7 +22,7 @@ class Note extends React.Component {
           return res.json();
         })
         .then(data => {
-          callback(noteId);
+          callback(noteId, this.props.isNoteDetail);
         })
         .catch(err => {
           console.log(err);
@@ -36,7 +36,7 @@ class Note extends React.Component {
         const month = months[d.getMonth()];
         const year = d.getFullYear();
 
-        console.log(`Note context`, this.context)
+        console.log(`Note props`, this.props);
 
         // const buttonLinkValue =  this.props.isNoteDetail
         //             ? '/'
@@ -48,7 +48,7 @@ class Note extends React.Component {
                     <h2 className="note-title" onClick={() => this.context.updateNoteId(this.props.id)}>{this.props.name}</h2>
                 </Link>
                 <p className="modified-text">Date modified: {month} {day}, {year}</p>
-                <button className="delete-button" onClick={() => this.requestDelete(this.props.id, this.context.handleDelete, this.props.isNoteDetail)}>Delete Note</button>
+                <button className="delete-button" onClick={() => this.requestDelete(this.props.id, this.context.handleDelete)}>Delete Note</button>
             </div>
         )
     }

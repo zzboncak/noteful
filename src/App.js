@@ -1,5 +1,5 @@
 import React from 'react';
-import { Route, Link, Switch } from 'react-router-dom';
+import { Route, Link, Redirect } from 'react-router-dom';
 import './App.css';
 import Home from './Home/Home';
 import NoteDetail from './NoteDetail/NoteDetail';
@@ -26,14 +26,14 @@ class App extends React.Component {
     });
   }
 
-  handleDelete = (noteId) => {
+  handleDelete = (noteId, isNoteDetail) => {
     console.log(`You clicked a delete button!`);
     let currentNotes = this.state.notes;
     let newNotes = currentNotes.filter(note => note.id !== noteId);
     this.setState({ notes: newNotes });
   }
 
-  requestDelete = (noteId, callback, isNoteDetail) => {
+  requestDelete = (noteId, callback) => {
     fetch(`http://localhost:9090/notes/${noteId}`, {
       method: 'DELETE',
       headers: {
@@ -94,6 +94,8 @@ class App extends React.Component {
 
     console.log(`App state`, this.state);
 
+    let noteExists = this.state.notes.find(note => note.id === this.state.currentNoteId) !== undefined;
+
     return (
       <NoteContext.Provider value={noteContext}>
         <div className="App">
@@ -111,7 +113,7 @@ class App extends React.Component {
             />
             <Route
               path='/note/:noteId'
-              component={NoteDetail}
+              component={noteExists ? NoteDetail : Home}
             />
           </main>
         </div>
