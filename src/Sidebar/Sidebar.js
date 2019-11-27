@@ -16,7 +16,7 @@ class Sidebar extends React.Component {
         return (
             <div className="folders-list">
                 {folders}
-                <button className="add-folder-button" type="button">Add a folder</button>
+                <button className="add-folder-button" type="button" onClick={this.context.toggleFolderFormView}>Add a folder</button>
             </div>
         )
     }

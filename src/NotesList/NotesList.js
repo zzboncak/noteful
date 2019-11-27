@@ -7,6 +7,7 @@ class NotesList extends React.Component {
     static contextType = NoteContext;
     
     render() {
+        console.log('notes list context', this.context);
         const initialNotes = this.context.currentFolderId 
             ? this.context.notes.filter(note => note.folderId === this.context.currentFolderId)
             : this.context.notes; 
@@ -20,7 +21,7 @@ class NotesList extends React.Component {
         return (
             <div className="notes-container">
                 {notes}
-                <button className="add-note-button" type="button">Add a note</button>
+                <button className="add-note-button" type="button" onClick={this.context.toggleNoteFormView}>Add a note</button>
             </div>
         );
     }

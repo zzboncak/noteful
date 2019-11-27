@@ -4,14 +4,32 @@ import './App.css';
 import Home from './Home/Home';
 import NoteDetail from './NoteDetail/NoteDetail';
 import NoteContext from './NoteContext';
+import AddFolder from './AddFolder/AddFolder';
+import AddNote from './AddNote/AddNote';
 
 class App extends React.Component {
 
   state = {
     folders: [],
     notes: [],
-    currentFolderId: null,
-    currentNoteId: null
+    currentFolderId: undefined,
+    currentNoteId: undefined,
+    isAddFormVisible: false,
+    isAddNoteVisible: false
+  }
+
+  toggleFolderFormView = () => {
+    let newView = !this.state.isAddFormVisible;
+    this.setState({
+      isAddFormVisible: newView,
+    });
+  }
+
+  toggleNoteFormView = () => {
+    let newView = !this.state.isAddNoteVisible;
+    this.setState({
+      isAddNoteVisible: newView,
+    });
   }
 
   updateFolderId = (id) => {
@@ -51,6 +69,30 @@ class App extends React.Component {
     .then(data => this.setState({ notes: data }))
     .catch(err => console.log(err));
   }
+
+  renderRoutes() {
+    return (
+      <>
+        {['/','/folder/:folderId'].map((path, i) => (
+          <Route exact path={path} key={i} component={Home} />
+        ))}
+        <Route
+            path='/note/:noteId'
+            component={NoteDetail}
+          />    
+      </>
+    );
+  }
+
+  renderPage() {
+    if(this.state.isAddFormVisible) {
+      return <AddFolder />;
+    } else if (this.state.isAddNoteVisible) {
+      return <AddNote />;
+    } else {
+      return this.renderRoutes();
+    }
+  }
   
   render() {
     const noteContext = {
@@ -61,6 +103,8 @@ class App extends React.Component {
       currentFolderId: this.state.currentFolderId,
       currentNoteId: this.state.currentNoteId,
       handleDelete: this.handleDelete,
+      toggleFolderFormView: this.toggleFolderFormView,
+      toggleNoteFormView: this.toggleNoteFormView
     };
 
     return (
@@ -70,18 +114,7 @@ class App extends React.Component {
             <h1 className="main-header" onClick={() => this.updateFolderId(null)}>Noteful</h1>
           </Link>
           <main className="main-container">
-            <Route
-              exact path='/'
-              component={Home}
-            />
-            <Route
-              path='/folder/:folderId'
-              component={Home}
-            />
-            <Route
-              path='/note/:noteId'
-              component={NoteDetail}
-            />
+            {this.renderPage()}
           </main>
         </div>
       </NoteContext.Provider>

@@ -9,6 +9,8 @@ const NoteContext = React.createContext({
     requestDelete: () => {},
     currentFolderId: null,
     currentNoteId: null,
+    toggleFolderFormView: () => {},
+    toggleNoteFormView: () => {}
 });
 
 export default NoteContext;
