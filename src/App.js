@@ -27,7 +27,6 @@ class App extends React.Component {
   }
 
   handleDelete = (noteId) => {
-    console.log(`You clicked a delete button!`);
     let currentNotes = this.state.notes;
     let newNotes = currentNotes.filter(note => note.id !== noteId);
     this.setState({ notes: newNotes });
