@@ -1,5 +1,5 @@
 import React from 'react';
-import { Route, Link, Redirect } from 'react-router-dom';
+import { Route, Link } from 'react-router-dom';
 import './App.css';
 import Home from './Home/Home';
 import NoteDetail from './NoteDetail/NoteDetail';
@@ -26,38 +26,11 @@ class App extends React.Component {
     });
   }
 
-  handleDelete = (noteId, isNoteDetail) => {
+  handleDelete = (noteId) => {
     console.log(`You clicked a delete button!`);
     let currentNotes = this.state.notes;
     let newNotes = currentNotes.filter(note => note.id !== noteId);
     this.setState({ notes: newNotes });
-  }
-
-  requestDelete = (noteId, callback) => {
-    fetch(`http://localhost:9090/notes/${noteId}`, {
-      method: 'DELETE',
-      headers: {
-        'content-type': 'application/json'
-      },
-    })
-    .then(res => {
-      if(!res.ok) {
-        return res.json().then(error => {
-          throw error
-        })
-      }
-      return res.json();
-    })
-    .then(data => {
-      // if (isNoteDetail) {
-      //   callback(noteId);
-      //   return <Redirect to='/' />;
-      // }
-      callback(noteId);
-    })
-    .catch(err => {
-      console.log(err);
-    });
   }
 
   componentDidMount() {
@@ -89,12 +62,7 @@ class App extends React.Component {
       currentFolderId: this.state.currentFolderId,
       currentNoteId: this.state.currentNoteId,
       handleDelete: this.handleDelete,
-      requestDelete: this.requestDelete
     };
-
-    console.log(`App state`, this.state);
-
-    let noteExists = this.state.notes.find(note => note.id === this.state.currentNoteId) !== undefined;
 
     return (
       <NoteContext.Provider value={noteContext}>
@@ -113,7 +81,7 @@ class App extends React.Component {
             />
             <Route
               path='/note/:noteId'
-              component={noteExists ? NoteDetail : Home}
+              component={NoteDetail}
             />
           </main>
         </div>

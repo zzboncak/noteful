@@ -9,9 +9,7 @@ class NoteDetail extends React.Component {
 
     render() {
         const note = this.context.notes.find(note => note.id === this.props.match.params.noteId);
-        //console.log(note);
         const folder = this.context.folders.find(folder => folder.id === note.folderId);
-        //console.log(folder);
         console.log(`Note Detail Props`, this.props);
         let isNoteDetail = (this.props.match.path === '/note/:noteId');
         return (
@@ -23,7 +21,7 @@ class NoteDetail extends React.Component {
                     <h2>{folder.name}</h2>
                 </div>
                 <div className="note-details">
-                    <Note id={this.props.match.params.noteId} name={note.name} modified={note.modified} isNoteDetail={isNoteDetail} />
+                    <Note id={this.props.match.params.noteId} name={note.name} modified={note.modified} isNoteDetail={isNoteDetail} history={this.props.history} />
                     <p className="note-content">{note.content}</p>
                 </div>
             </div>
