@@ -6,6 +6,9 @@ import NoteDetail from './NoteDetail/NoteDetail';
 import NoteContext from './NoteContext';
 import AddFolder from './AddFolder/AddFolder';
 import AddNote from './AddNote/AddNote';
+import NoteDetailError from './NoteDetailError/NoteDetailError';
+import AddNoteError from './AddNoteError/AddNoteError';
+import AddFolderError from './AddFolderError/AddFolderError';
 
 class App extends React.Component {
 
@@ -37,7 +40,6 @@ class App extends React.Component {
     this.setState({
       folders: newFolders
     });
-    console.log(this.state.folders);
   }
 
   addNewNote = (note) => {
@@ -45,7 +47,6 @@ class App extends React.Component {
     this.setState({
       notes: newNotes
     });
-    console.log(this.state.notes);
   }
 
   updateFolderId = (id) => {
@@ -92,19 +93,29 @@ class App extends React.Component {
         {['/','/folder/:folderId'].map((path, i) => (
           <Route exact path={path} key={i} component={Home} />
         ))}
-        <Route
-            path='/note/:noteId'
-            component={NoteDetail}
-          />    
+        <NoteDetailError>
+          <Route
+              path='/note/:noteId'
+              component={NoteDetail}
+            />    
+        </NoteDetailError>
       </>
     );
   }
 
   renderPage() {
     if(this.state.isAddFormVisible) {
-      return <AddFolder addNewFolder={this.addNewFolder} toggleFolderFormView={this.toggleFolderFormView} />;
+      return (
+      <AddFolderError>
+        <AddFolder addNewFolder={this.addNewFolder} toggleFolderFormView={this.toggleFolderFormView} />
+      </AddFolderError>
+      );
     } else if (this.state.isAddNoteVisible) {
-      return <AddNote addNewNote={this.addNewNote} toggleNoteFormView={this.toggleNoteFormView}/>;
+      return (
+      <AddNoteError>
+        <AddNote addNewNote={this.addNewNote} toggleNoteFormView={this.toggleNoteFormView}/>
+      </AddNoteError>
+      );
     } else {
       return this.renderRoutes();
     }

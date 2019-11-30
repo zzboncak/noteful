@@ -12,8 +12,14 @@ class NoteDetail extends React.Component {
     }
 
     render() {
-        if(this.context.currentNoteId !== null) {
+        console.log(`NoteDetail Context`, this.context);
+        if(this.context.notes.length === 0) {
+            return (
+                <div>loading...</div>
+            );
+        } else {
             const note = this.context.notes.find(note => note.id == this.props.match.params.noteId);
+            console.log(note);
             const folder = this.context.folders.find(folder => folder.id === note.folderId);
             let isNoteDetail = (this.props.match.path === '/note/:noteId');
             return (
@@ -30,14 +36,8 @@ class NoteDetail extends React.Component {
                     </div>
                 </div>
             );
-        } else {
-            return (
-                <div>loading...</div>
-            );
+            
         }
-        // const note = this.context.notes.find(note => note.id === this.props.match.params.noteId);
-        // const folder = this.context.folders.find(folder => folder.id === note.folderId);
-        // console.log(`Note Detail Props`, this.props);
     }
 }
 

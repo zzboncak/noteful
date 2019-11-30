@@ -7,7 +7,6 @@ class NotesList extends React.Component {
     static contextType = NoteContext;
     
     render() {
-        console.log('notes list context', this.context);
         const initialNotes = this.context.currentFolderId 
             ? this.context.notes.filter(note => note.folderId === this.context.currentFolderId)
             : this.context.notes; 

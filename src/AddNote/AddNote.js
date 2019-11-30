@@ -19,9 +19,7 @@ class AddNote extends React.Component {
     }
 
     handleSubmitAddNote = (e) => {
-        //this function will make a post call to add a folder
         e.preventDefault();
-        console.log('you tried to add a Note!');
         let newNote = {
             id: this.generateNoteId(),
             name: this.state.name,
@@ -64,11 +62,9 @@ class AddNote extends React.Component {
     }
 
     onSelectedFolderChange = (event) => {
-        //do something here to set the state to the current folder selected
         this.setState({
             selectedFolder: event.target.value
         });
-        // console.log(this.state.selectedFolder);
     }
 
     validateNoteName() {

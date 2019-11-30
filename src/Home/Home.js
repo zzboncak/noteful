@@ -2,6 +2,8 @@ import React from 'react';
 import Sidebar from '../Sidebar/Sidebar';
 import NotesList from '../NotesList/NotesList';
 import NoteContext from '../NoteContext';
+import SideBarError from './SideBarError/SideBarError';
+import NotesListError from './NotesListError/NotesListError';
 
 class Home extends React.Component {
     static contextType = NoteContext;
@@ -13,8 +15,12 @@ class Home extends React.Component {
     render() {
         return (
             <main className="main-container">
-                <Sidebar />
-                <NotesList />
+                <SideBarError>
+                    <Sidebar />
+                </SideBarError>
+                <NotesListError>
+                    <NotesList />
+                </NotesListError>
             </main>
         )
     }
