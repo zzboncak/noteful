@@ -32,6 +32,22 @@ class App extends React.Component {
     });
   }
 
+  addNewFolder = (folder) => {
+    let newFolders = [...this.state.folders, folder];
+    this.setState({
+      folders: newFolders
+    });
+    console.log(this.state.folders);
+  }
+
+  addNewNote = (note) => {
+    let newNotes = [...this.state.notes, note];
+    this.setState({
+      notes: newNotes
+    });
+    console.log(this.state.notes);
+  }
+
   updateFolderId = (id) => {
     this.setState({
       currentFolderId: id
@@ -86,9 +102,9 @@ class App extends React.Component {
 
   renderPage() {
     if(this.state.isAddFormVisible) {
-      return <AddFolder />;
+      return <AddFolder addNewFolder={this.addNewFolder} toggleFolderFormView={this.toggleFolderFormView} />;
     } else if (this.state.isAddNoteVisible) {
-      return <AddNote />;
+      return <AddNote addNewNote={this.addNewNote} toggleNoteFormView={this.toggleNoteFormView}/>;
     } else {
       return this.renderRoutes();
     }

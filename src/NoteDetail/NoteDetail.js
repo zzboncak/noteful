@@ -13,7 +13,7 @@ class NoteDetail extends React.Component {
 
     render() {
         if(this.context.currentNoteId !== null) {
-            const note = this.context.notes.find(note => note.id === this.props.match.params.noteId);
+            const note = this.context.notes.find(note => note.id == this.props.match.params.noteId);
             const folder = this.context.folders.find(folder => folder.id === note.folderId);
             let isNoteDetail = (this.props.match.path === '/note/:noteId');
             return (

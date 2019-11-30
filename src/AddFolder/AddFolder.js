@@ -8,10 +8,39 @@ class AddFolder extends React.Component {
 
     static contextType = NoteContext;
     
+    generateFolderId = () => {
+        //this function will generate a random folderId
+        let folderId = Math.ceil(Math.random()*1000000);
+        return folderId;
+    }
+
     handleSubmitAddFolder = (e) => {
         //this function will make a post call to add a folder
         e.preventDefault();
-        console.log('you tried to add a folder!');
+        let newFolder = {
+            id: this.generateFolderId(),
+            name: this.state.name
+        };
+
+        const options = {
+            method: 'POST',
+            headers: {
+                'content-type': 'application/json'
+            },
+            body: JSON.stringify(newFolder)
+        }
+        fetch('http://localhost:9090/folders', options)
+            .then(res => {
+                if (!res.ok) {
+                    throw new Error(`Failed to add folder`);
+                }
+                return res.json()
+            })
+            .then(data => {
+                this.props.addNewFolder(data);
+                this.props.toggleFolderFormView();
+            })
+            .catch(error => console.log(error));
     }
     
     onNameChange = (value) => {
