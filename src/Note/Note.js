@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import './Note.css';
 import NoteContext from '../NoteContext';
+import PropTypes from 'prop-types';
 
 class Note extends React.Component {
     static contextType = NoteContext;
@@ -49,6 +50,13 @@ class Note extends React.Component {
             </div>
         )
     }
+}
+
+Note.propTypes = {
+  isNoteDetail: PropTypes.bool,
+  name: PropTypes.string,
+  modified: PropTypes.string,
+  id: PropTypes.string
 }
 
 export default Note;

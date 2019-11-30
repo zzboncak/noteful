@@ -1,5 +1,6 @@
 import React from 'react';
 import NoteContext from '../NoteContext';
+import PropTypes from 'prop-types';
 
 class AddFolder extends React.Component {
     state = {
@@ -18,7 +19,7 @@ class AddFolder extends React.Component {
         //this function will make a post call to add a folder
         e.preventDefault();
         let newFolder = {
-            id: this.generateFolderId(),
+            id: this.generateFolderId().toString(),
             name: this.state.name
         };
 
@@ -69,6 +70,11 @@ class AddFolder extends React.Component {
             </div>
         );
     }
+}
+
+AddFolder.propTypes = {
+    addNewFolder: PropTypes.func,
+    toggleFolderFormView: PropTypes.func
 }
 
 export default AddFolder;

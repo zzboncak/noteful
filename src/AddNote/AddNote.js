@@ -1,5 +1,6 @@
 import React from 'react';
 import NoteContext from '../NoteContext';
+import PropTypes from 'prop-types';
 
 class AddNote extends React.Component {
     constructor(props) {
@@ -21,7 +22,7 @@ class AddNote extends React.Component {
     handleSubmitAddNote = (e) => {
         e.preventDefault();
         let newNote = {
-            id: this.generateNoteId(),
+            id: this.generateNoteId().toString(),
             name: this.state.name,
             modified: new Date(),
             folderId: this.state.selectedFolder,
@@ -111,6 +112,11 @@ class AddNote extends React.Component {
             </div>
         );
     }
+}
+
+AddNote.propTypes ={
+    addNewNote: PropTypes.func,
+    toggleNoteFormView: PropTypes.func
 }
 
 export default AddNote;
