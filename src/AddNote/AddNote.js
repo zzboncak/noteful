@@ -6,9 +6,18 @@ class AddNote extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            name: "",
-            selectedFolder: "",
-            noteContent: ""
+            name: {
+                value: "",
+                isTouched: false
+            },
+            selectedFolder: {
+                value: "",
+                isTouched: false
+            },
+            noteContent: {
+                value: "",
+                isTouched: false
+            },
         }
     }
 
@@ -50,73 +59,109 @@ class AddNote extends React.Component {
             .catch(error => console.log(error));
     }
     
-    onNameChange = (value) => {
+    onNameChange = (newName) => {
         this.setState({
-            name: value
+            name: { value: newName, isTouched: true }
         });
     }
 
-    onContentChange = (value) => {
+    onContentChange = (newContent) => {
         this.setState({
-            noteContent: value
+            noteContent: { value: newContent, isTouched: true }
         });
     }
 
     onSelectedFolderChange = (event) => {
         this.setState({
-            selectedFolder: event.target.value
+            selectedFolder: { value: event.target.value, isTouched: true }
         });
     }
 
     validateNoteName() {
-        const noteName = this.state.name;
-        if(noteName.length <1 && this.state.selectedFolder === "" && this.state.noteContent === "") {
-            return "Please fill out this form";
-        } else if(noteName.length < 1){
+        if(this.state.name.value.length < 1){
             return "You must enter a name";
-        } else if (this.state.selectedFolder === "") {
+        }
+    }
+
+    validateFolderChoice() {
+        if (this.state.selectedFolder.value === "default") {
+            return "Please choose a real folder";
+        } else if (this.state.selectedFolder.value === "") {
             return "You must select a folder";
-        } else if (this.state.noteContent === "") {
+        }
+    }
+
+    validateNoteContent() {
+        if (this.state.noteContent.value === "") {
             return "Your note needs content";
         }
     }
 
     render() {
-        console.log(this.state);
         const folderNames = this.context.folders.map((folder, i) => {
             return (
                 <option key={i} value={folder.id}>{folder.name}</option>
             );
         });
+
+        const nameError = this.validateNoteName();
+        const folderError = this.validateFolderChoice();
+        const contentError = this.validateNoteContent();
         
         return (
             <div className="add-note-form">
                 <form onSubmit={e => this.handleSubmitAddNote(e)}>
                     <label htmlFor="add-note">Note name: </label>
-                    <input type="text" placeholder="name of note" name="add-note" value={this.state.name} onChange={e => this.onNameChange(e.target.value)} />
+                    <input 
+                        type="text" 
+                        placeholder="name of note" 
+                        name="add-note" 
+                        value={this.state.name.value} 
+                        onChange={e => this.onNameChange(e.target.value)} 
+                    />
+                    <br />
+                    {this.state.name.isTouched && nameError}
                     <br />
 
-                    <label htmlFor="folders">Which Folder?</label>
-                    <select name="folders" value={this.state.selectedFolder} onChange={this.onSelectedFolderChange}>
+                    <label htmlFor="folders">Which Folder? </label>
+                    <select name="folders" value={this.state.selectedFolder.value} onChange={this.onSelectedFolderChange}>
+                        <option value="default">Please select a folder...</option>
                         {folderNames}
                     </select>
                     <br />
-
-                    <textarea id='note-content' value={this.state.noteContent} onChange={e => this.onContentChange(e.target.value)}></textarea>
+                    {this.state.selectedFolder.isTouched && folderError}
                     <br />
 
-                    <button type="submit" disabled={this.validateNoteName()}>Add this note</button>
+                    <label htmlFor='note-content'>Note Content: </label>
+                    <textarea 
+                        name='note-content' 
+                        id='note-content' 
+                        value={this.state.noteContent.value} 
+                        onChange={e => this.onContentChange(e.target.value)} 
+                    />
+                    <br />
+                    {this.state.noteContent.isTouched && contentError}
+                    <br />
+
+                    <button 
+                        type="submit" 
+                        disabled={
+                            this.validateNoteName() ||
+                            this.validateFolderChoice() ||
+                            this.validateNoteContent()
+                    }>
+                        Add this note
+                    </button>
                 </form>
                 <button onClick={this.context.toggleNoteFormView}>Go Back</button>
-            <p className="note-error">{this.validateNoteName()}</p>
             </div>
         );
     }
 }
 
 AddNote.propTypes ={
-    addNewNote: PropTypes.func,
-    toggleNoteFormView: PropTypes.func
+    addNewNote: PropTypes.func.isRequired,
+    toggleNoteFormView: PropTypes.func.isRequired
 }
 
 export default AddNote;
