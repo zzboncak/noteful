@@ -54,9 +54,9 @@ class Note extends React.Component {
 
 Note.propTypes = {
   isNoteDetail: PropTypes.bool,
-  name: PropTypes.string,
+  name: PropTypes.string.isRequired,
   modified: PropTypes.string,
-  id: PropTypes.string
+  id: PropTypes.string.isRequired
 }
 
 export default Note;

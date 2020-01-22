@@ -4,7 +4,8 @@ import PropTypes from 'prop-types';
 
 class AddFolder extends React.Component {
     state = {
-        name: ""
+        name: "",
+        isTouched: false
     }
 
     static contextType = NoteContext;
@@ -46,7 +47,8 @@ class AddFolder extends React.Component {
     
     onNameChange = (value) => {
         this.setState({
-            name: value
+            name: value,
+            isTouched: true
         });
     }
 
@@ -66,15 +68,15 @@ class AddFolder extends React.Component {
                     <button type="submit" disabled={this.validateFolderName()}>Add this folder</button>
                 </form>
                 <button onClick={this.context.toggleFolderFormView}>Go Back</button>
-                <p className="folder-error">{this.validateFolderName()}</p>
+                {this.state.isTouched && <p className="folder-error">{this.validateFolderName()}</p>}
             </div>
         );
     }
 }
 
 AddFolder.propTypes = {
-    addNewFolder: PropTypes.func,
-    toggleFolderFormView: PropTypes.func
+    addNewFolder: PropTypes.func.isRequired,
+    toggleFolderFormView: PropTypes.func.isRequired
 }
 
 export default AddFolder;
