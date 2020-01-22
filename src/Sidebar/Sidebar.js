@@ -9,7 +9,7 @@ class Sidebar extends React.Component {
     render() {
         const folders = this.context.folders.map((folder, i) => {
             return (
-                <Folder name={folder.name} key={i} folderId={folder.id} className={(this.context.currentFolderId === folder.id) ? "selected-folder" : ""} />
+                <Folder name={folder.folder_name} key={i} folderId={folder.id.toString()} className={(this.context.currentFolderId === folder.id) ? "selected-folder" : ""} />
             );
         });
         

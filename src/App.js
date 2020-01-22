@@ -68,7 +68,7 @@ class App extends React.Component {
   }
 
   componentDidMount() {
-    fetch('http://localhost:9090/folders').then(res => {
+    fetch('http://localhost:8000/api/folders').then(res => {
       if (!res.ok) {
         throw new Error(`something went wrong`)
       }
@@ -77,7 +77,7 @@ class App extends React.Component {
     .then(data => this.setState({ folders: data }))
     .catch(err => console.log(err));
 
-    fetch('http://localhost:9090/notes').then(res => {
+    fetch('http://localhost:8000/api/notes').then(res => {
       if (!res.ok) {
         throw new Error(`something went wrong`)
       }

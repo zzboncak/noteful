@@ -8,12 +8,12 @@ class NotesList extends React.Component {
     
     render() {
         const initialNotes = this.context.currentFolderId 
-            ? this.context.notes.filter(note => note.folderId === this.context.currentFolderId)
+            ? this.context.notes.filter(note => note.folder_id == this.context.currentFolderId)
             : this.context.notes; 
         
         const notes = initialNotes.map((note, i) => {
             return (
-                <Note name={note.name} modified={note.modified} id={note.id} key={i} isNoteDetail={false} />
+                <Note name={note.note_name} modified={note.modified} id={note.id.toString()} key={i} isNoteDetail={false} />
             );
         });
         
