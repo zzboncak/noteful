@@ -9,19 +9,12 @@ class AddFolder extends React.Component {
     }
 
     static contextType = NoteContext;
-    
-    generateFolderId = () => {
-        //this function will generate a random folderId
-        let folderId = Math.ceil(Math.random()*1000000);
-        return folderId;
-    }
 
     handleSubmitAddFolder = (e) => {
         //this function will make a post call to add a folder
         e.preventDefault();
         let newFolder = {
-            id: this.generateFolderId().toString(),
-            name: this.state.name
+            folder_name: this.state.name
         };
 
         const options = {
@@ -31,7 +24,7 @@ class AddFolder extends React.Component {
             },
             body: JSON.stringify(newFolder)
         }
-        fetch('http://localhost:9090/folders', options)
+        fetch('https://pacific-lowlands-48526.herokuapp.com/api/folders', options)
             .then(res => {
                 if (!res.ok) {
                     throw new Error(`Failed to add folder`);

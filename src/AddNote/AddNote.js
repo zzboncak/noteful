@@ -23,19 +23,18 @@ class AddNote extends React.Component {
 
     static contextType = NoteContext;
     
-    generateNoteId = () => {
-        let noteId = Math.ceil(Math.random()*1000000);
-        return noteId;
-    }
+    // generateNoteId = () => {
+    //     let noteId = Math.ceil(Math.random()*1000000);
+    //     return noteId;
+    // }
 
     handleSubmitAddNote = (e) => {
         e.preventDefault();
         let newNote = {
-            id: this.generateNoteId().toString(),
-            name: this.state.name,
+            note_name: this.state.name.value,
             modified: new Date(),
-            folderId: this.state.selectedFolder,
-            content: this.state.noteContent
+            folder_id: this.state.selectedFolder.value,
+            note_content: this.state.noteContent.value
         };
 
         const options = {
@@ -45,7 +44,7 @@ class AddNote extends React.Component {
             },
             body: JSON.stringify(newNote)
         }
-        fetch('http://localhost:9090/notes', options)
+        fetch('https://pacific-lowlands-48526.herokuapp.com/api/notes', options)
             .then(res => {
                 if (!res.ok) {
                     throw new Error(`Failed to add note`);
@@ -100,7 +99,7 @@ class AddNote extends React.Component {
     render() {
         const folderNames = this.context.folders.map((folder, i) => {
             return (
-                <option key={i} value={folder.id}>{folder.name}</option>
+                <option key={i} value={folder.id}>{folder.folder_name}</option>
             );
         });
 
