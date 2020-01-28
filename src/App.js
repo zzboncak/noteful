@@ -68,7 +68,7 @@ class App extends React.Component {
   }
 
   componentDidMount() {
-    fetch('http://localhost:8000/api/folders').then(res => {
+    fetch('https://pacific-lowlands-48526.herokuapp.com/api/folders').then(res => {
       if (!res.ok) {
         throw new Error(`something went wrong`)
       }
@@ -77,7 +77,7 @@ class App extends React.Component {
     .then(data => this.setState({ folders: data }))
     .catch(err => console.log(err));
 
-    fetch('http://localhost:8000/api/notes').then(res => {
+    fetch('https://pacific-lowlands-48526.herokuapp.com/api/notes').then(res => {
       if (!res.ok) {
         throw new Error(`something went wrong`)
       }
