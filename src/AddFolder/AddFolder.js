@@ -1,6 +1,7 @@
 import React from 'react';
 import NoteContext from '../NoteContext';
 import PropTypes from 'prop-types';
+import { API_ENDPOINT } from '../config';
 
 class AddFolder extends React.Component {
     state = {
@@ -24,7 +25,7 @@ class AddFolder extends React.Component {
             },
             body: JSON.stringify(newFolder)
         }
-        fetch('https://pacific-lowlands-48526.herokuapp.com/api/folders', options)
+        fetch(`${API_ENDPOINT}/folders`, options)
             .then(res => {
                 if (!res.ok) {
                     throw new Error(`Failed to add folder`);

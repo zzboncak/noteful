@@ -1,0 +1,1 @@
+export const API_ENDPOINT = 'https://pacific-lowlands-48526.herokuapp.com/api';

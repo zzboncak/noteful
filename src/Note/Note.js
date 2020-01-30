@@ -3,12 +3,13 @@ import { Link } from 'react-router-dom';
 import './Note.css';
 import NoteContext from '../NoteContext';
 import PropTypes from 'prop-types';
+import { API_ENDPOINT } from '../config';
 
 class Note extends React.Component {
     static contextType = NoteContext;
     
     requestDelete = (noteId, callback, isNoteDetail) => {
-        fetch(`http://localhost:9090/notes/${noteId}`, {
+        fetch(`${API_ENDPOINT}/notes/${noteId}`, {
           method: 'DELETE',
           headers: {
             'content-type': 'application/json'
@@ -20,13 +21,12 @@ class Note extends React.Component {
               throw error
             })
           }
-          return res.json();
         })
-        .then(data => {
+        .then(() => {
           if(isNoteDetail){
             this.props.history.push('/');
           }
-            callback(noteId, this.props.isNoteDetail);
+          callback(noteId);
         })
         .catch(err => {
           console.log(err);

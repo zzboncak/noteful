@@ -1,6 +1,7 @@
 import React from 'react';
 import NoteContext from '../NoteContext';
 import PropTypes from 'prop-types';
+import { API_ENDPOINT } from '../config';
 
 class AddNote extends React.Component {
     constructor(props) {
@@ -23,10 +24,6 @@ class AddNote extends React.Component {
 
     static contextType = NoteContext;
     
-    // generateNoteId = () => {
-    //     let noteId = Math.ceil(Math.random()*1000000);
-    //     return noteId;
-    // }
 
     handleSubmitAddNote = (e) => {
         e.preventDefault();
@@ -44,7 +41,7 @@ class AddNote extends React.Component {
             },
             body: JSON.stringify(newNote)
         }
-        fetch('https://pacific-lowlands-48526.herokuapp.com/api/notes', options)
+        fetch(`${API_ENDPOINT}/notes`, options)
             .then(res => {
                 if (!res.ok) {
                     throw new Error(`Failed to add note`);

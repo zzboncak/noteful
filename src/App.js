@@ -9,6 +9,7 @@ import AddNote from './AddNote/AddNote';
 import NoteDetailError from './NoteDetailError/NoteDetailError';
 import AddNoteError from './AddNoteError/AddNoteError';
 import AddFolderError from './AddFolderError/AddFolderError';
+import { API_ENDPOINT } from './config';
 
 class App extends React.Component {
 
@@ -62,13 +63,14 @@ class App extends React.Component {
   }
 
   handleDelete = (noteId) => {
+    let numId = parseInt(noteId);
     let currentNotes = this.state.notes;
-    let newNotes = currentNotes.filter(note => note.id !== noteId);
+    let newNotes = currentNotes.filter(note => note.id !== numId);
     this.setState({ notes: newNotes });
   }
 
   componentDidMount() {
-    fetch('https://pacific-lowlands-48526.herokuapp.com/api/folders').then(res => {
+    fetch(`${API_ENDPOINT}/folders`).then(res => {
       if (!res.ok) {
         throw new Error(`something went wrong`)
       }
@@ -77,7 +79,7 @@ class App extends React.Component {
     .then(data => this.setState({ folders: data }))
     .catch(err => console.log(err));
 
-    fetch('https://pacific-lowlands-48526.herokuapp.com/api/notes').then(res => {
+    fetch(`${API_ENDPOINT}/notes`).then(res => {
       if (!res.ok) {
         throw new Error(`something went wrong`)
       }
